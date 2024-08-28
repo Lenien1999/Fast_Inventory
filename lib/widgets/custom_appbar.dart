@@ -18,7 +18,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      toolbarHeight: 100,
+      toolbarHeight: 80,
       shadowColor: Colors.grey,
       elevation: 3,
       leading: isTrue
@@ -85,7 +85,7 @@ class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
                   child: Text(
                     "Peter Adebayo",
                     style: TextStyle(
-                        color: secondaryClr,
+                        color: primaryClr,
                         fontWeight: FontWeight.bold,
                         fontSize: 12),
                   ),
