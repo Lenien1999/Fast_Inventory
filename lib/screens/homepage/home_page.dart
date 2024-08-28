@@ -7,7 +7,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../widgets/custom_appbar.dart';
 
 class HomePage extends StatefulWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,10 +16,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double? _deviceWidth, _deviceHeight;
   String salesTimeframe = 'Today';
+
   @override
   Widget build(BuildContext context) {
     _deviceHeight = MediaQuery.of(context).size.height;
     _deviceWidth = MediaQuery.of(context).size.width;
+
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -39,37 +41,57 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Container(
           padding: EdgeInsets.symmetric(
-              horizontal: _deviceWidth! * 0.04, vertical: _deviceWidth! * 0.04),
+            horizontal: _deviceWidth! * 0.04,
+            vertical: _deviceWidth! * 0.04,
+          ),
           child: ListView(
             children: [
               Text(
                 "Dashboard",
                 style: textStyle(secondaryClr, 20, FontWeight.bold),
               ),
-              headerRowWidget(subtitle: "Dashboard", title: "Home"),
-              inventoryDetails(
-                  icon: Icons.shopping_cart_outlined,
-                  title: '0',
-                  headerTitle: 'Sales',
-                  onDropdownChanged: (value) {
-                    setState(() {
-                      salesTimeframe = value;
-                    });
-                  },
-                  headerSbt: salesTimeframe,
-                  clr: primaryClr),
-              inventoryDetails(
-                  icon: Icons.money,
-                  title: '0',
-                  clr: secondaryClr,
-                  headerTitle: 'Total Revenue',
-                  headerSbt: salesTimeframe),
-              inventoryDetails(
-                  icon: Icons.person,
-                  clr: Colors.redAccent,
-                  title: '1',
-                  headerTitle: 'Customers',
-                  headerSbt: ''),
+              // headerRowWidget(subtitle: "Dashboard", title: "Home"),
+              _inventoryDetails(
+                isOthers: false,
+                icon: Icons.shopping_cart_outlined,
+                title: '0',
+                headerTitle: 'Sales',
+                onDropdownChanged: (value) {
+                  setState(() {
+                    salesTimeframe = value;
+                  });
+                },
+                headerSbt: salesTimeframe,
+                clr: primaryClr,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    flex: 1,
+                    child: _inventoryDetails(
+                      icon: Icons.money,
+                      title: '#20.0',
+                      clr: secondaryClr,
+                      headerTitle: 'Total Revenue',
+                      headerSbt: salesTimeframe,
+                      isOthers: true,
+                    ),
+                  ),
+                  const SizedBox(width: 10), // Add some space between the cards
+                  Flexible(
+                    flex: 1,
+                    child: _inventoryDetails(
+                      isOthers: true,
+                      icon: Icons.person,
+                      clr: Colors.redAccent,
+                      title: '1',
+                      headerTitle: 'Customers',
+                      headerSbt: '',
+                    ),
+                  ),
+                ],
+              ),
               _recentTransactionWidget(),
             ],
           ),
@@ -78,93 +100,117 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget inventoryDetails({
+  Widget _inventoryDetails({
     required Color clr,
     required IconData icon,
     required String title,
     required String headerTitle,
+    required bool isOthers,
     required String headerSbt,
     Function(String)? onDropdownChanged,
   }) {
     return Container(
       margin: EdgeInsets.symmetric(
-        vertical: _deviceHeight! * 0.02,
+        vertical: _deviceHeight! * 0.01,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: _deviceWidth! * 0.02,
-      ),
+          horizontal: _deviceWidth! * 0.02, vertical: _deviceHeight! * 0.02),
       height: _deviceHeight! * 0.25,
-      width: _deviceWidth! * 0.8,
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
-          offset: const Offset(0, 3),
-        )
-      ]),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
+            spreadRadius: 3,
+            blurRadius: 3,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              headerRowWidget(title: headerTitle, subtitle: headerSbt),
-              DropdownButton<String>(
-                underline: const SizedBox(), // Remove the underline
-                icon: const Icon(
-                  Icons.menu,
-                  color: Color.fromARGB(255, 223, 219, 219),
-                ),
-                items: const [
-                  DropdownMenuItem(
-                    value: 'Today',
-                    child: Text('Today'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'This Month',
-                    child: Text('This Month'),
-                  ),
-                  DropdownMenuItem(
-                    value: 'This Year',
-                    child: Text('This Year'),
-                  ),
-                ],
-                onChanged: (value) {
-                  if (onDropdownChanged != null && value != null) {
-                    onDropdownChanged(value);
-                  }
-                },
+              headerRowWidget(
+                title: headerTitle,
+                subtitle: headerSbt,
+                isOthers: isOthers,
               ),
+              if (onDropdownChanged != null)
+                DropdownButton<String>(
+                  underline: const SizedBox(), // Remove the underline
+                  icon: const Icon(
+                    LineAwesomeIcons.filter_solid,
+                    color: Color.fromARGB(255, 187, 182, 182),
+                  ),
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Today',
+                      child: Text('Today'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'This Month',
+                      child: Text('This Month'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'This Year',
+                      child: Text('This Year'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      onDropdownChanged(value);
+                    }
+                  },
+                ),
             ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           Row(
+            mainAxisAlignment:
+                isOthers ? MainAxisAlignment.start : MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 35,
+                radius: 30,
                 backgroundColor: const Color.fromARGB(255, 236, 231, 231),
                 child: Icon(
                   icon,
                   color: clr,
                 ),
               ),
-              const SizedBox(
-                width: 15,
-              ),
+              const SizedBox(width: 15),
               Text(
                 title,
                 style: textStyle(secondaryClr, 24, FontWeight.bold),
-              )
+              ),
             ],
-          )
+          ),
         ],
       ),
     );
   }
 
-  Row headerRowWidget({required String title, required String subtitle}) {
+  Widget headerRowWidget({
+    required String title,
+    required bool isOthers,
+    required String subtitle,
+  }) {
+    if (isOthers) {
+      return Column(
+        children: [
+          Text(
+            title,
+            style: textStyle(Colors.black, 18, FontWeight.bold),
+          ),
+          Text(
+            subtitle,
+            style: textStyle(primaryClr, 14, FontWeight.w600),
+          ),
+        ],
+      );
+    }
     return Row(
       children: [
         Text(
@@ -175,7 +221,10 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.all(4.0),
           child: Text("|"),
         ),
-        Text(subtitle, style: textStyle(primaryClr, 14, FontWeight.w600))
+        Text(
+          subtitle,
+          style: textStyle(primaryClr, 14, FontWeight.w600),
+        ),
       ],
     );
   }
@@ -186,17 +235,19 @@ class _HomePageState extends State<HomePage> {
         vertical: _deviceHeight! * 0.02,
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: _deviceWidth! * 0.02,
-      ),
+          horizontal: _deviceWidth! * 0.02, vertical: _deviceHeight! * 0.02),
       width: _deviceWidth! * 0.8,
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
-          offset: const Offset(0, 3),
-        )
-      ]),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -204,9 +255,7 @@ class _HomePageState extends State<HomePage> {
             'Recent Transactions',
             style: TextStyle(fontSize: 18),
           ),
-          const SizedBox(
-            height: 10,
-          ),
+          const SizedBox(height: 10),
           InventoryTable(),
         ],
       ),

@@ -36,7 +36,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     screenHeight = MediaQuery.of(context).size.height;
     screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: const CustomAppbar(isTrue: true,
+      appBar: const CustomAppbar(
+        isTrue: true,
         title: 'Change Password',
       ),
       body: Center(
@@ -91,21 +92,21 @@ class _ChangePasswordState extends State<ChangePassword> {
             ),
             // Old Password
             TextFielWidget(
+              isPasswordField: true,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Old password can't be empty";
                 }
                 return null;
               },
-              isTrue: true,
               controller: oldPassController,
               hintText: 'Old Password',
-              icon: LineAwesomeIcons.key_solid,
+              icon: LineAwesomeIcons.user_lock_solid,
             ),
             const SizedBox(height: 20),
 
-            // New Password
             TextFielWidget(
+              isPasswordField: true,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "New password can't be empty";
@@ -114,15 +115,14 @@ class _ChangePasswordState extends State<ChangePassword> {
                 }
                 return null;
               },
-              isTrue: true,
               controller: newPassController,
               hintText: 'New Password',
-              icon: LineAwesomeIcons.key_solid,
+              icon: LineAwesomeIcons.user_lock_solid,
             ),
             const SizedBox(height: 20),
 
-            // Confirm New Password
             TextFielWidget(
+              isPasswordField: true,
               validator: (value) {
                 if (value!.isEmpty) {
                   return "Confirm password can't be empty";
@@ -131,14 +131,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                 }
                 return null;
               },
-              isTrue: true,
               controller: confirmNewPassController,
-              icon: LineAwesomeIcons.markdown,
+              icon: LineAwesomeIcons.user_lock_solid,
               hintText: 'Confirm New Password',
             ),
             const SizedBox(height: 30),
 
-            // Submit Button
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -164,6 +162,4 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
     );
   }
-
- 
 }

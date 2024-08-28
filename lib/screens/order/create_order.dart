@@ -5,6 +5,7 @@ import 'package:fast_inventory/utils/color.dart';
 import 'package:fast_inventory/utils/text_style.dart';
 import 'package:fast_inventory/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class CreateOrder extends StatelessWidget {
   CreateOrder({super.key});
@@ -24,10 +25,14 @@ class CreateOrder extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: ListView(
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             TextFielWidget(
+                icon: LineAwesomeIcons.search_dollar_solid,
                 controller: serchController,
-                hintText: 'Search for Name',
-                isTrue: false),
+                hintText: 'Search for Order',
+               ),
             _createOrderWidget(),
             _appendOrderWidget(),
           ],
@@ -41,10 +46,12 @@ class CreateOrder extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: _deviceHeight! * 0.02),
       height: _deviceHeight! * 0.3,
       width: _deviceWidth! * 0.9,
-      decoration: const BoxDecoration(
-        color: Color.fromRGBO(209, 231, 221, 1),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: const Color.fromRGBO(209, 231, 221, 1),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
             "Create New Order",

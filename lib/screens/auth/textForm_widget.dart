@@ -13,14 +13,16 @@ class TextFielWidget extends StatefulWidget {
     this.icon,
     required this.hintText,
     this.suffix_icon,
-    required this.isTrue,
+    this.isPasswordField = false,
   });
+
   final String hintText;
   final IconData? icon;
   final ValidatorFunction? validator;
-  final bool isTrue;
+
   final IconData? suffix_icon;
   final TextEditingController controller;
+  final bool isPasswordField;
 
   @override
   State<TextFielWidget> createState() => _TextFielWidgetState();
@@ -42,15 +44,18 @@ class _TextFielWidgetState extends State<TextFielWidget> {
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.controller,
       validator: widget.validator,
+      obscureText: widget.isPasswordField ? true : false,
       decoration: InputDecoration(
-          suffixIcon: isValid
-              ? const Icon(Icons.check,
-                  color: Color.fromARGB(
-                      255, 8, 165, 13)) // Show checkmark if valid
-              : widget.suffix_icon != null
-                  ? Icon(widget.suffix_icon,
-                      color: Colors.black) // Show original icon if invalid
-                  : null,
+          suffixIcon: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (isValid)
+                const Icon(
+                  Icons.check,
+                  color: Color.fromARGB(255, 8, 165, 13),
+                ),
+            ],
+          ),
           errorStyle: const TextStyle(
             color: primaryClr,
             fontSize: 14.0,
@@ -59,17 +64,12 @@ class _TextFielWidgetState extends State<TextFielWidget> {
           filled: true,
           hintText: widget.hintText,
           fillColor: Colors.white,
-          border: const OutlineInputBorder(
-              gapPadding: 0,
-              borderSide:
-                  BorderSide(color: Color.fromARGB(255, 250, 246, 246))),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(color: primaryClr),
+          ),
           hintStyle: const TextStyle(color: Color.fromARGB(255, 189, 186, 186)),
-          prefixIcon: widget.isTrue
-              ? Container(
-                  padding: const EdgeInsets.all(0),
-                  color: const Color.fromARGB(255, 221, 215, 215),
-                  child: Icon(widget.icon, color: Colors.black))
-              : null),
+          prefixIcon: Icon(widget.icon, color: Colors.black)),
       onChanged: _validateInput,
     );
   }

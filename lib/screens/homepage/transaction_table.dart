@@ -49,9 +49,9 @@ class _InventoryTableState extends State<InventoryTable> {
   void _filterData() {
     setState(() {
       filteredData = data
-          .where((item) =>
-              item.values.any((value) =>
-                  value.toLowerCase().contains(_searchController.text.toLowerCase())))
+          .where((item) => item.values.any((value) => value
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase())))
           .toList();
     });
   }
@@ -61,11 +61,12 @@ class _InventoryTableState extends State<InventoryTable> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: TextField(
             controller: _searchController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+            decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
               hintText: "Search for transaction by account type...",
             ),
           ),
@@ -74,7 +75,8 @@ class _InventoryTableState extends State<InventoryTable> {
           scrollDirection: Axis.horizontal,
           child: Container(
             decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromARGB(255, 199, 196, 196))),
+                border: Border.all(
+                    color: const Color.fromARGB(255, 199, 196, 196))),
             child: DataTable(
               columns: const [
                 DataColumn(label: Text('REF')),

@@ -19,7 +19,8 @@ class ProfilePage extends StatelessWidget {
     _deviceWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const CustomAppbar(
-        title: 'Profile', isTrue: true,
+        title: 'Profile',
+        isTrue: true,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -38,8 +39,8 @@ class ProfilePage extends StatelessWidget {
                       BoxShadow(
                         color: const Color.fromARGB(255, 221, 218, 218)
                             .withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
+                        spreadRadius: 3,
+                        blurRadius: 3,
                         offset: const Offset(0, 3),
                       )
                     ]),
@@ -57,6 +58,27 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          LineAwesomeIcons.facebook,
+                          color: Color.fromARGB(255, 9, 122, 214),
+                        ),
+                        Icon(
+                          LineAwesomeIcons.linkedin,
+                          color: primaryClr,
+                        ),
+                        Icon(
+                          LineAwesomeIcons.whatsapp,
+                          color: primaryClr,
+                        ),
+                        Icon(
+                          LineAwesomeIcons.twitter_square,
+                          color: primaryClr,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),

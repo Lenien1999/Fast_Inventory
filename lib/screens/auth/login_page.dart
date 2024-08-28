@@ -2,6 +2,7 @@ import 'package:fast_inventory/screens/auth/textForm_widget.dart';
 import 'package:fast_inventory/utils/color.dart';
 import 'package:fast_inventory/utils/text_style.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({super.key});
@@ -41,14 +42,17 @@ class _LoginPageState extends State<LoginPage> {
       margin: EdgeInsets.symmetric(vertical: screenHeight! * 0.05),
       height: screenHeight! * 0.6,
       width: screenWidth! * 0.9,
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
-        BoxShadow(
-          color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
-          spreadRadius: 5,
-          blurRadius: 7,
-          offset: const Offset(0, 3),
-        ),
-      ]),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: const Color.fromARGB(255, 221, 218, 218).withOpacity(0.5),
+              spreadRadius: 3,
+              blurRadius: 3,
+              offset: const Offset(0, 3),
+            ),
+          ]),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
         child: Column(
@@ -62,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Text(
               "Enter your username & password to login",
+              textAlign: TextAlign.center,
               style: textStyle(Colors.black, 16, FontWeight.w400),
             ),
             SizedBox(
@@ -87,12 +92,13 @@ class _LoginPageState extends State<LoginPage> {
             }
             return null;
           },
-          isTrue: true,
           controller: usernameController,
-          icon: Icons.alternate_email_rounded, hintText: 'Username',
+          icon: Icons.person,
+          hintText: 'Username',
         ),
         labelText("Password"),
         TextFielWidget(
+          isPasswordField: true,
           validator: (value) {
             if (value!.isEmpty) {
               return "password can't be empty";
@@ -102,7 +108,8 @@ class _LoginPageState extends State<LoginPage> {
             return null;
           },
           controller: passwordController,
-          isTrue: false, hintText: 'password',
+          hintText: 'password',
+          icon: LineAwesomeIcons.user_lock_solid,
         ),
         rememberMeWidget(),
         loginButton(),
@@ -163,8 +170,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget headerIcon() {
-    return 
-    CircleAvatar(
+    return CircleAvatar(
       radius: screenWidth! * 0.08,
       backgroundColor: const Color.fromRGBO(110, 190, 76, 1),
       child: const Icon(
