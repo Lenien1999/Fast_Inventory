@@ -207,14 +207,6 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 10,
           ),
-          const TextField(
-            decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: "Seach for transaction by account type..."),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
           InventoryTable(),
         ],
       ),
