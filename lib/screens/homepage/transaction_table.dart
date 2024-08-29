@@ -27,7 +27,18 @@ class _InventoryTableState extends State<InventoryTable> {
       'STATUS': 'Pending',
       'DATE': '2024-08-25',
     },
-    // More data entries...
+
+     {
+      'REF': '003',
+      'ITEM NAME': 'Item 3',
+      'QUANTITY': '5',
+      'PAYMENT MODE': 'Card',
+      'AMOUNT PAID': '₦5000',
+      'CUSTOMER': 'Jane',
+      'STATUS': 'Pending',
+      'DATE': '2024-08-25',
+    },
+     
   ];
 
   List<Map<String, String>>? filteredData;

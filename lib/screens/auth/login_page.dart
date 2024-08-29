@@ -1,6 +1,7 @@
 import 'package:fast_inventory/screens/auth/textForm_widget.dart';
 import 'package:fast_inventory/utils/color.dart';
 import 'package:fast_inventory/utils/text_style.dart';
+ 
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
@@ -12,9 +13,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  double? screenHeight, screenWidth;
+  double? _screenHeight, _screenWidth;
 
   bool isChecked = false;
+  final _formKey = GlobalKey<FormState>();
 
   final TextEditingController usernameController = TextEditingController();
 
@@ -22,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
+    _screenHeight = MediaQuery.of(context).size.height;
+    _screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -39,9 +41,8 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget loginFormWidget() {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: screenHeight! * 0.05),
-      height: screenHeight! * 0.6,
-      width: screenWidth! * 0.9,
+      margin: EdgeInsets.symmetric(vertical: _screenHeight! * 0.05),
+      width: _screenWidth! * 0.9,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
               style: textStyle(primaryClr, 20, FontWeight.normal),
             ),
             SizedBox(
-              height: screenHeight! * 0.01,
+              height: _screenHeight! * 0.01,
             ),
             Text(
               "Enter your username & password to login",
@@ -70,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
               style: textStyle(Colors.black, 16, FontWeight.w400),
             ),
             SizedBox(
-              height: screenHeight! * 0.01,
+              height: _screenHeight! * 0.01,
             ),
             formWidget(),
           ],
@@ -79,42 +80,44 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+
   Widget formWidget() {
     return Form(
+        key: _formKey,
         child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        labelText("Username"),
-        TextFielWidget(
-          validator: (value) {
-            if (value!.isEmpty) {
-              return "username can't be empty";
-            }
-            return null;
-          },
-          controller: usernameController,
-          icon: Icons.person,
-          hintText: 'Username',
-        ),
-        labelText("Password"),
-        TextFielWidget(
-          isPasswordField: true,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return "password can't be empty";
-            } else if (value.length < 5) {
-              return "password can't less than 5";
-            }
-            return null;
-          },
-          controller: passwordController,
-          hintText: 'password',
-          icon: LineAwesomeIcons.user_lock_solid,
-        ),
-        rememberMeWidget(),
-        loginButton(),
-      ],
-    ));
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            labelText("Username"),
+            TextFielWidget(
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "username can't be empty";
+                }
+                return null;
+              },
+              controller: usernameController,
+              icon: Icons.person,
+              hintText: 'Username',
+            ),
+            labelText("Password"),
+            TextFielWidget(
+              isPasswordField: true,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return "password can't be empty";
+                } else if (value.length < 5) {
+                  return "password can't less than 5";
+                }
+                return null;
+              },
+              controller: passwordController,
+              hintText: 'password',
+              icon: LineAwesomeIcons.user_lock_solid,
+            ),
+            rememberMeWidget(),
+            loginButton(),
+          ],
+        ));
   }
 
   Widget rememberMeWidget() {
@@ -142,21 +145,25 @@ class _LoginPageState extends State<LoginPage> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: MaterialButton(
-        height: screenHeight! * 0.07,
-        minWidth: screenWidth! * 0.9,
+        height: _screenHeight! * 0.07,
+        minWidth: _screenWidth! * 0.9,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8), // Set BorderRadius here
         ),
         color: secondaryClr,
-        onPressed: () {
-          Navigator.pushNamed(context, 'home');
-        },
+        onPressed: _changePassword,
         child: Text(
           "Login",
           style: textStyle(Colors.white, 24, FontWeight.bold),
         ),
       ),
     );
+  }
+
+  void _changePassword() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.pushNamed(context, 'home');
+    }
   }
 
   Widget labelText(String label) {
@@ -171,7 +178,7 @@ class _LoginPageState extends State<LoginPage> {
 
   Widget headerIcon() {
     return CircleAvatar(
-      radius: screenWidth! * 0.08,
+      radius: _screenWidth! * 0.08,
       backgroundColor: const Color.fromRGBO(110, 190, 76, 1),
       child: const Icon(
         Icons.add_shopping_cart_outlined,

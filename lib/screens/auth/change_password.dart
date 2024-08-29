@@ -64,7 +64,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Container(
       alignment: Alignment.center,
       margin: EdgeInsets.symmetric(vertical: screenHeight! * 0.05),
-      height: screenHeight! * 0.6,
+      // height: screenHeight! * 0.6,
       width: screenWidth! * 0.9,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

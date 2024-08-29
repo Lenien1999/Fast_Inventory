@@ -5,6 +5,7 @@ import 'package:fast_inventory/screens/order/create_order.dart';
 import 'package:fast_inventory/screens/profile/profile_page.dart';
 import 'package:fast_inventory/utils/color.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Fast Inventory',
       theme: ThemeData(
+        textTheme: GoogleFonts.zillaSlabTextTheme(),
         colorScheme: ColorScheme.fromSeed(seedColor: scafoldClr),
         useMaterial3: true,
       ),
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
         'home': (context) => HomePage(),
         'profile': (context) => ProfilePage(),
         'changepassword': (context) => const ChangePassword(),
-         'createOrder': (context) =>  CreateOrder(),
+        'createOrder': (context) => CreateOrder(),
       },
     );
   }

@@ -1,9 +1,8 @@
 import 'package:fast_inventory/screens/homepage/transaction_table.dart';
 import 'package:fast_inventory/utils/color.dart';
 import 'package:fast_inventory/utils/text_style.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 import '../../widgets/custom_appbar.dart';
 
 class HomePage extends StatefulWidget {
@@ -71,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                     flex: 1,
                     child: _inventoryDetails(
                       icon: Icons.money,
-                      title: '#20.0',
+                      title: '₦20.0',
                       clr: secondaryClr,
                       headerTitle: 'Total Revenue',
                       headerSbt: salesTimeframe,
@@ -93,6 +92,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
               _recentTransactionWidget(),
+              
             ],
           ),
         ),
@@ -100,6 +100,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  
   Widget _inventoryDetails({
     required Color clr,
     required IconData icon,
